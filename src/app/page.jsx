@@ -1,34 +1,54 @@
 "use client";
 import Image from "next/image";
-import { useAuth } from "@/hooks/useAuth";
 import AnnouncementList from "@/components/AnnouncementList";
-
+import { motion } from "framer-motion";
 
 export default function Home() {
-	const { isAuthenticated } = useAuth();
-
 	return (
-		<div className="font-sans min-h-screen">
-			<div className="relative w-full h-48 md:h-64 xl:h-80 overflow-hidden">
+		<div className="font-sans min-h-screen bg-slate-50">
+			{/* Hero Section */}
+			<div className="relative w-full h-64 md:h-80 xl:h-96 overflow-hidden">
 				<Image
 					src="/banner.jpg"
 					alt="NCUE Banner"
 					fill
 					priority
-					className="object-cover xl:object-contain object-center transition-all duration-300"
+					className="object-cover object-center"
 				/>
-			</div>
-			<main className="flex flex-col gap-8 items-center sm:items-start max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-				<div className="text-center sm:text-left">
-					<h2 className="text-3xl font-bold mb-4" style={{ color: 'var(--primary)' }}>
-						歡迎來到 彰師校外獎學金資訊平台
-					</h2>
-					<p className="text-lg mb-8" style={{ color: 'var(--text-muted)' }}>
-						您可以在這裡獲取所有校外獎學金的資訊，並且使用 AI 問答助理解答您的問題。
-					</p>
+				<div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-slate-900/20" />
+				<div className="absolute inset-0 flex flex-col justify-center items-center text-center text-white p-4">
+					<motion.h1
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.5 }}
+						className="text-4xl md:text-5xl font-bold tracking-tight text-shadow"
+						style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.7)' }}
+					>
+						彰師校外獎學金資訊平台
+					</motion.h1>
+					<motion.p
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.5, delay: 0.2 }}
+						className="mt-4 text-lg md:text-xl max-w-3xl text-shadow-sm"
+						style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.6)' }}
+					>
+						一站式獲取所有校外獎學金資訊，並由 AI 助教為您解惑。
+					</motion.p>
 				</div>
-				<AnnouncementList />
+			</div>
+
+			{/* Main Content */}
+			<main className="-mt-16 md:-mt-24 relative z-10">
+				<div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
+					<div className="bg-white rounded-xl shadow-2xl shadow-slate-900/10">
+						<AnnouncementList />
+					</div>
+				</div>
 			</main>
+
+			{/* Add some space at the bottom */}
+			<div className="h-24"></div>
 		</div>
 	);
 }

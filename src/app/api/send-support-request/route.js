@@ -122,8 +122,6 @@ ${formatConversationHistory(conversationHistory)}
 
       const result = await transporter.sendMail(mailOptions)
       
-      console.log('郵件發送成功:', result.messageId)
-
       // 記錄成功的支援請求
       logSuccessAction('SUPPORT_REQUEST_SENT', '/api/send-support-request', {
         userId: authCheck.user.id,

@@ -4,8 +4,9 @@ import { useAuth } from '@/hooks/useAuth'
 import ChatInterface from '@/components/ChatInterface'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import { Loader2 } from 'lucide-react'
 
-export default function ChatPage() {
+export default function AiAssistantPage() {
     const { isAuthenticated, loading } = useAuth()
     const router = useRouter()
 
@@ -15,20 +16,21 @@ export default function ChatPage() {
         }
     }, [isAuthenticated, loading, router])
 
-    if (loading) {
+    if (loading || !isAuthenticated) {
         return (
-            <div className="min-h-screen flex items-center justify-center">
-                <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                    <p className="text-gray-600">載入中...</p>
-                </div>
+            <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 text-slate-600">
+                <Loader2 className="w-12 h-12 animate-spin text-indigo-500 mb-4" />
+                <p className="text-lg font-semibold">正在載入 AI 助理...</p>
+                <p>需要您保持登入狀態</p>
             </div>
         )
     }
 
-    if (!isAuthenticated) {
-        return null
-    }
-
-    return <ChatInterface />
+    return (
+        <div className="min-h-screen bg-slate-100 dark:bg-slate-900 flex items-center justify-center p-2 sm:p-4">
+            <div className="w-full max-w-4xl h-[95vh] max-h-[800px] flex">
+                <ChatInterface />
+            </div>
+        </div>
+    )
 }
